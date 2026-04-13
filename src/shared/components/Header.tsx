@@ -5,17 +5,24 @@ import { SearchButton } from './SearchButton'
 import { UserMenu } from './UserMenu'
 
 export async function Header() {
-  const supabase = await createServerSupabaseClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
+  let user: { id: string } | null = null
   let profile: { username: string | null; avatar_url: string | null } | null = null
-  if (user) {
-    const { data } = await supabase
-      .from('profiles')
-      .select('username, avatar_url')
-      .eq('id', user.id)
-      .single()
-    profile = data as { username: string | null; avatar_url: string | null } | null
+
+  try {
+    const supabase = await createServerSupabaseClient()
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+
+    if (user) {
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('username, avatar_url')
+        .eq('id', user.id)
+        .single()
+      profile = profileData as { username: string | null; avatar_url: string | null } | null
+    }
+  } catch {
+    // Supabase 연결 실패 시 비로그인 UI 표시
   }
 
   return (
