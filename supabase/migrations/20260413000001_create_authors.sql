@@ -29,6 +29,9 @@ create trigger authors_updated_at
   before update on public.authors
   for each row execute function public.set_updated_at();
 
+-- 인덱스 (RLS 필터 성능 최적화)
+create index authors_active_idx on public.authors(is_delete, is_block);
+
 -- RLS 활성화
 alter table public.authors enable row level security;
 
