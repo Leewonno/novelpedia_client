@@ -1,3 +1,10 @@
+export interface Profile {
+  id: string
+  username: string | null
+  avatar_url: string | null
+  updated_at: string
+}
+
 export type Genre = 'novel' | 'webnovel' | 'manga' | 'webtoon'
 export type Status = 'ongoing' | 'completed' | 'hiatus'
 
@@ -137,6 +144,11 @@ export interface Database {
         Row: NovelHistory
         Insert: never // 트리거만 INSERT
         Update: never
+      }
+      profiles: {
+        Row: Profile
+        Insert: Omit<Profile, 'updated_at'> & { updated_at?: string }
+        Update: Partial<Omit<Profile, 'id'>>
       }
     }
   }
