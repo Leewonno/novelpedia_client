@@ -5,6 +5,11 @@ create table public.profiles (
   updated_at timestamptz not null default now()
 );
 
+-- RLS enabled immediately; INSERT is intentionally omitted — only the
+-- handle_new_user SECURITY DEFINER trigger inserts rows, bypassing RLS.
+alter table public.profiles enable row level security;
+
+-- Requires public.set_updated_at() from a prior migration
 create trigger profiles_updated_at
   before update on public.profiles
   for each row execute function public.set_updated_at();
@@ -25,9 +30,6 @@ $$ language plpgsql security definer;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
-
--- RLS
-alter table public.profiles enable row level security;
 
 create policy "Profiles are viewable by everyone"
   on public.profiles

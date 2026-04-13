@@ -147,7 +147,7 @@ export interface Database {
       }
       profiles: {
         Row: Profile
-        Insert: Omit<Profile, 'updated_at'> & { updated_at?: string }
+        Insert: Omit<Profile, 'id' | 'updated_at'> & { id?: string; updated_at?: string }
         Update: Partial<Omit<Profile, 'id'>>
       }
     }
