@@ -29,8 +29,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 | `novels_history` | 작품 편집 이력 (트리거 자동 기록, 직접 쓰기 불가) |
 
 ### 핵심 규칙
-- `primary_name` / `primary_title`: `normalizePrimary()` 함수로 저장 전 변환 (`src/lib/utils/normalize.ts`)
-- `stars`: rating*10 합산 정수. 평균 = `stars / stars_count / 10` (`calcAverageRating()` in `src/lib/supabase/types.ts`)
+- `primary_name` / `primary_title`: `normalizePrimary()` 함수로 저장 전 변환 (`src/shared/lib/utils/normalize.ts`)
+- `stars`: rating*10 합산 정수. 평균 = `stars / stars_count / 10` (`calcAverageRating()` in `src/shared/lib/supabase/types.ts`)
 - `genre` enum: `novel | webnovel | manga | webtoon`
 - `status` enum: `ongoing | completed | hiatus`
 - `is_delete = true`: 소프트 삭제 (공개 읽기 차단)
@@ -38,7 +38,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 히스토리: UPDATE 시 트리거가 이전 상태 자동 스냅샷, `version` 자동 +1
 
 ### TypeScript 타입 위치
-`src/lib/supabase/types.ts` — Author, Novel, Review, AuthorHistory, NovelHistory, Database
+`src/shared/lib/supabase/types.ts` — Author, Novel, Review, AuthorHistory, NovelHistory, Database
 
 ## 코딩 규칙
 
