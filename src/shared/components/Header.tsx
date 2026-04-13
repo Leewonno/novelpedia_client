@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { createServerSupabaseClient } from '@/shared/lib/supabase/client'
+import { createServerSupabaseClient } from '@/shared/lib/supabase/server'
 import { ThemeToggle } from './ThemeToggle'
 import { SearchButton } from './SearchButton'
 import { UserMenu } from './UserMenu'

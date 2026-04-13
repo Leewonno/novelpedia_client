@@ -1,5 +1,6 @@
-import { createBrowserClient, createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+'use client'
+
+import { createBrowserClient } from '@supabase/ssr'
 import type { Database } from './types'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -12,25 +13,4 @@ if (!supabaseUrl || !supabaseAnonKey) {
 /** 클라이언트 컴포넌트에서 사용 ('use client' 필요) */
 export function createClient() {
   return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
-}
-
-/** 서버 컴포넌트 / Server Action에서 사용 */
-export async function createServerSupabaseClient() {
-  const cookieStore = await cookies()
-  return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
-    cookies: {
-      getAll() {
-        return cookieStore.getAll()
-      },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
-        } catch {
-          // Server Components에서는 쿠키 설정 불가 — Middleware에서 처리
-        }
-      },
-    },
-  })
 }

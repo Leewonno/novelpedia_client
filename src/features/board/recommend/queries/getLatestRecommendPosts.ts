@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from "@/shared/lib/supabase/client";
+import { createServerSupabaseClient } from "@/shared/lib/supabase/server";
 import type { Database } from "@/shared/lib/supabase/types";
 
 export type RecommendPostCardData = {

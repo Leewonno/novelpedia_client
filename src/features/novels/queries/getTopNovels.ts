@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from '@/shared/lib/supabase/client'
+import { createServerSupabaseClient } from '@/shared/lib/supabase/server'
 
 export type NovelCardData = {
   id: string
