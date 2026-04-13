@@ -38,7 +38,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 히스토리: UPDATE 시 트리거가 이전 상태 자동 스냅샷, `version` 자동 +1
 
 ### TypeScript 타입 위치
-`src/shared/lib/supabase/types.ts` — Author, Novel, Review, AuthorHistory, NovelHistory, Database
+`src/shared/lib/supabase/types.ts` — Author, Novel, Review, AuthorHistory, NovelHistory, Profile, Database
+
+### Supabase 클라이언트
+- **브라우저 (Client Component)**: `createClient()` from `@/shared/lib/supabase/client`
+- **서버 (Server Component / Server Action)**: `createServerSupabaseClient()` from `@/shared/lib/supabase/server`
 
 ## 코딩 규칙
 
