@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
+/* Tailwind v4: class 기반 dark mode 활성화 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+.dark {
+  --background: #0f0f0f;
+  --foreground: #ededed;
 }
 
 @theme inline {
