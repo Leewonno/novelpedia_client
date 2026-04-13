@@ -34,19 +34,19 @@ export async function getLatestRecommendPosts(): Promise<
   const userIds = posts.map((p) => p.user_id);
   const postIds = posts.map((p) => p.id);
 
-  // 2. 프로필 조회 (실패 시 익명으로 graceful degradation)
-  const { data: profiles } = await supabase
-    .from("profiles")
-    .select("id, username, avatar_url")
-    .in("id", userIds)
-    .returns<Pick<Profile, "id" | "username" | "avatar_url">[]>();
-
-  // 3. 좋아요 수 조회 (실패 시 0으로 graceful degradation)
-  const { data: likes } = await supabase
-    .from("recommend_likes")
-    .select("post_id")
-    .in("post_id", postIds)
-    .returns<Pick<RecommendLike, "post_id">[]>();
+  // 2, 3. 프로필/좋아요 병렬 조회 (독립 쿼리, 실패 시 graceful degradation)
+  const [{ data: profiles }, { data: likes }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("id, username, avatar_url")
+      .in("id", userIds)
+      .returns<Pick<Profile, "id" | "username" | "avatar_url">[]>(),
+    supabase
+      .from("recommend_likes")
+      .select("post_id")
+      .in("post_id", postIds)
+      .returns<Pick<RecommendLike, "post_id">[]>(),
+  ]);
 
   const profileMap = new Map((profiles ?? []).map((p) => [p.id, p]));
   const likesCountMap = (likes ?? []).reduce<Record<string, number>>(
