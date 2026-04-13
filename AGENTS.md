@@ -18,7 +18,27 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## 핵심 도메인
 
-> 도메인 엔티티와 스키마는 확정되는 시점에 이 섹션에 추가한다.
+### 테이블
+
+| 테이블 | 설명 |
+|--------|------|
+| `authors` | 작가 (name, primary_name UNIQUE, bio, content markdown, stars 캐시, version) |
+| `novels` | 작품 (title, primary_title UNIQUE, author_id FK, genre, status, tags text[], content markdown, stars 캐시, version) |
+| `reviews` | 리뷰 (novel_id FK, user_id FK, rating numeric 1.0-5.0 0.5단위, body) — 1인 1리뷰 |
+| `authors_history` | 작가 편집 이력 (트리거 자동 기록, 직접 쓰기 불가) |
+| `novels_history` | 작품 편집 이력 (트리거 자동 기록, 직접 쓰기 불가) |
+
+### 핵심 규칙
+- `primary_name` / `primary_title`: `normalizePrimary()` 함수로 저장 전 변환 (`src/lib/utils/normalize.ts`)
+- `stars`: rating*10 합산 정수. 평균 = `stars / stars_count / 10` (`calcAverageRating()` in `src/lib/supabase/types.ts`)
+- `genre` enum: `novel | webnovel | manga | webtoon`
+- `status` enum: `ongoing | completed | hiatus`
+- `is_delete = true`: 소프트 삭제 (공개 읽기 차단)
+- `is_block = true`: 관리자 차단 (공개 읽기 차단, 관리자만 변경 가능)
+- 히스토리: UPDATE 시 트리거가 이전 상태 자동 스냅샷, `version` 자동 +1
+
+### TypeScript 타입 위치
+`src/lib/supabase/types.ts` — Author, Novel, Review, AuthorHistory, NovelHistory, Database
 
 ## 코딩 규칙
 
