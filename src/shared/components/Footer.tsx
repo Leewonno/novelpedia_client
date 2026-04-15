@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { Container } from './Container'
+import Link from "next/link";
+import { Container } from "./Container";
 
 export function Footer() {
   return (
@@ -21,9 +21,9 @@ export function Footer() {
           <span className="cursor-default">이용약관</span>
         </div>
         <p className="text-sm text-gray-400 dark:text-gray-600">
-          © 2025 Novelpedia
+          © 2026 NOVELPEDIA
         </p>
       </Container>
     </footer>
-  )
+  );
 }
