@@ -1,38 +1,38 @@
-'use client'
+"use client";
 
-import { useState, useRef, useEffect } from 'react'
-import { Search, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useState, useRef, useEffect } from "react";
+import { Search, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function SearchButton() {
-  const [open, setOpen] = useState(false)
-  const [query, setQuery] = useState('')
-  const inputRef = useRef<HTMLInputElement>(null)
-  const router = useRouter()
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    if (open) inputRef.current?.focus()
-  }, [open])
+    if (open) inputRef.current?.focus();
+  }, [open]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        setOpen(false)
-        setQuery('')
+      if (e.key === "Escape") {
+        setOpen(false);
+        setQuery("");
       }
     }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleSearch = () => {
-    const trimmed = query.trim()
+    const trimmed = query.trim();
     if (trimmed) {
-      router.push(`/search?q=${encodeURIComponent(trimmed)}`)
-      setOpen(false)
-      setQuery('')
+      router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+      setOpen(false);
+      setQuery("");
     }
-  }
+  };
 
   if (open) {
     return (
@@ -41,10 +41,10 @@ export function SearchButton() {
           ref={inputRef}
           type="text"
           value={query}
-          onChange={e => setQuery(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && handleSearch()}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           placeholder="작품명 또는 작가명..."
-          className="w-48 text-sm px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600"
+          className="w-48 text-sm px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-full bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600"
         />
         <button
           onClick={handleSearch}
@@ -54,23 +54,26 @@ export function SearchButton() {
           <Search size={16} />
         </button>
         <button
-          onClick={() => { setOpen(false); setQuery('') }}
+          onClick={() => {
+            setOpen(false);
+            setQuery("");
+          }}
           aria-label="검색창 닫기"
           className="p-1.5 hover:text-gray-600 dark:hover:text-gray-300"
         >
           <X size={16} />
         </button>
       </div>
-    )
+    );
   }
 
   return (
     <button
       onClick={() => setOpen(true)}
       aria-label="검색"
-      className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
     >
       <Search size={18} />
     </button>
-  )
+  );
 }
