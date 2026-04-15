@@ -1,15 +1,15 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import { Heart } from 'lucide-react'
-import type { RecommendPostCardData } from '../queries/getLatestRecommendPosts'
+import Link from "next/link";
+import Image from "next/image";
+import { Heart } from "lucide-react";
+import type { RecommendPostCardData } from "../queries/getLatestRecommendPosts";
 
 export function RecommendPostCard({ post }: { post: RecommendPostCardData }) {
-  const initials = post.username[0]?.toUpperCase() ?? '?'
+  const initials = post.username[0]?.toUpperCase() ?? "?";
 
   return (
     <Link
       href={`/board/recommend/${post.id}`}
-      className="flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+      className="flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors"
     >
       <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-medium shrink-0 overflow-hidden relative">
         {post.avatar_url ? (
@@ -37,5 +37,5 @@ export function RecommendPostCard({ post }: { post: RecommendPostCardData }) {
         </div>
       </div>
     </Link>
-  )
+  );
 }

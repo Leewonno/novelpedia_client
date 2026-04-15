@@ -16,7 +16,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-pretendard), 'Pretendard Variable', Pretendard, -apple-system, system-ui, sans-serif;
+  --color-primary: #ff264c;
+  --font-sans:
+    var(--font-pretendard), "Pretendard Variable", Pretendard, -apple-system,
+    system-ui, sans-serif;
 }
 
 body {
